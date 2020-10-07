@@ -46,5 +46,41 @@ class Queue():
     def size(self):
         return len(self.queue)
 
-def get_neighbor(word):
-    
+import string
+
+def get_neighbors(word):
+    neighbors = []
+    letters = list(string.ascii_lowercase)
+
+    word_letters = list(word)
+
+    for i in range(len(word_letters)):
+        for l in letters:
+            word_letters_copy = list(word_letters)
+            word_letters_copy[i] = l
+            candidate_word = ''.join(word_letters_copy)
+
+            if candidate_word != word and candidate_word in words:
+                neighbors.append(candidate_word)
+    return neighbors
+
+def bfs(begin_word, end_word):
+    visited = set()
+    q = Queue()
+    q.enqueue([begin_word])
+
+    while q.size() > 0:
+        path = q.dequeue()
+
+        v = path[-1]
+
+        if v not in visited:
+            visited.add(v)
+            if v == end_word:
+                return path
+            
+            for neighbor in get_neighbors(v):
+                new_path = path + [neighbor]
+                q.enqueue(new_path)
+
+print(bfs('poor', 'rich'))
