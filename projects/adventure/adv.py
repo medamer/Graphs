@@ -30,15 +30,16 @@ player = Player(world.starting_room)
 # traversal_path = ['n', 'n']
 traversal_path = []
 
+# Create a set to store visited room:
 visited = set()
 
 my_graph = {player.current_room.id: {d: '?' for d in player.current_room.get_exits()}}
 
 opzt = {'n': 's', 's': 'n', 'w': 'e', 'e': 'w'}
 
+# Define a function to get available exits:
 def available_exit(room_id):
     unvisited_direction = []
-
     for d in my_graph[room_id]:
         if my_graph[room_id][d] == '?':
             unvisited_direction.append(d)
